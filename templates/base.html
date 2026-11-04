@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>{% block title %}DoNotStress · SIT student wellbeing{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="{{ url_for('static', filename='favicon.svg') }}" type="image/svg+xml">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script>
+    (function(){
+      const saved = localStorage.getItem('dns-theme');
+      const theme = saved || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.dataset.theme = theme;
+      document.addEventListener('DOMContentLoaded', function(){
+        const root = document.getElementById('dns-campus');
+        const btn = document.getElementById('ds-theme-toggle');
+        if(!root) return;
+        root.dataset.theme = theme;
+        if(btn){
+          btn.textContent = theme === 'dark' ? 'Light' : 'Dark';
+          btn.setAttribute('aria-pressed', theme === 'dark');
+          btn.addEventListener('click', function(){
+            const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+            root.dataset.theme = next;
+            document.documentElement.dataset.theme = next;
+            localStorage.setItem('dns-theme', next);
+            btn.textContent = next === 'dark' ? 'Light' : 'Dark';
+            btn.setAttribute('aria-pressed', next === 'dark');
+          });
+        }
+      });
+    })();
+  </script>
+</head>
+<body>
+  {% block content %}{% endblock %}
+</body>
+</html>

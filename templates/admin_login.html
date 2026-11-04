@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Admin sign in · DoNotStress{% endblock %}
+{% block content %}
+<div id="dns-campus">
+  <header class="ds-top">
+    <div class="ds-bar">
+      <a class="ds-brand" href="{{ url_for('checkin') }}"><span class="ds-logo" aria-hidden="true">+</span>DoNotStress</a>
+      <div class="ds-bar-end">
+        <details class="ds-nav-wrap">
+          <summary class="ds-menu">Menu</summary>
+          <nav class="ds-nav" aria-label="Main">
+            <a href="{{ url_for('checkin') }}">Home</a>
+            <a href="{{ url_for('checkin') }}">Check-in</a>
+          </nav>
+        </details>
+        <a class="ds-talk" href="mailto:SITCounselling@SingaporeTech.edu.sg">Talk to someone</a>
+        <button class="ds-theme" type="button" id="ds-theme-toggle" aria-pressed="false" title="Switch theme">Dark</button>
+      </div>
+    </div>
+  </header>
+  <main>
+    <section class="ds-admin-login" aria-labelledby="login-title">
+      <span class="ds-pill">Admin access</span>
+      <h1 id="login-title">Saved check-ins,<br>for your review.</h1>
+      <p>Sign in to view student records, search Student IDs, and filter by risk or cohort.</p>
+      <form method="post" action="{{ url_for('admin_login') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+        <div class="ds-field">
+          <label class="ds-label" for="username">Username</label>
+          <input class="ds-input" id="username" name="username" autocomplete="username" maxlength="100" required>
+        </div>
+        <div class="ds-field">
+          <label class="ds-label" for="password">Password</label>
+          <input class="ds-input" id="password" name="password" type="password" autocomplete="current-password" maxlength="256" required>
+        </div>
+        {% if error %}<p class="ds-error" role="alert">{{ error }}</p>{% endif %}
+        <button class="ds-primary" type="submit">Sign in to admin view →</button>
+      </form>
+      <p class="ds-help">Students can complete and save their own check-ins without signing in.</p>
+    </section>
+  </main>
+  <footer class="ds-footer">
+    <div class="ds-foot-brand"><span class="ds-logo" aria-hidden="true">+</span>DoNotStress</div>
+    <p class="ds-foot-kicker">Need to talk?</p>
+    <ul class="ds-foot-contacts">
+      <li>SIT Counselling 24-Hour Helpline · <a href="tel:65922030">6592 2030</a> · <a href="mailto:SITCounselling@SingaporeTech.edu.sg">SITCounselling@SingaporeTech.edu.sg</a></li>
+      <li>Samaritans of Singapore (24 hours) · <a href="tel:1767">1767</a> · CareText <a href="tel:91511767">9151 1767</a> (WhatsApp)</li>
+      <li>National mindline · <a href="tel:1771">1771</a></li>
+    </ul>
+    <p class="ds-foot-crisis">Immediate crises: If you face an urgent emergency outside of school hours, you can use the 24-hour helpline (6592 2030) or reach out to national helplines such as Samaritans of Singapore (1-767) or emergency services (995 / 999).</p>
+    <p class="ds-foot-note">A guide, not a diagnosis.</p>
+  </footer>
+</div>
+{% endblock %}

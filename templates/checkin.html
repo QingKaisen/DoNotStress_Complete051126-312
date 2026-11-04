@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+<div id="dns-campus" aria-label="DoNotStress student wellbeing app">
+  <header class="ds-top">
+    <div class="ds-bar">
+      <button class="ds-brand" type="button" data-nav="home"><span class="ds-logo" aria-hidden="true">+</span>DoNotStress</button>
+      <div class="ds-bar-end">
+        <details class="ds-nav-wrap">
+          <summary class="ds-menu">Menu</summary>
+          <nav class="ds-nav" aria-label="Main">
+            <button data-nav="home" aria-current="page">Home</button>
+            <button data-nav="checkin">Check-in</button>
+          </nav>
+        </details>
+        <a class="ds-talk" href="mailto:SITCounselling@SingaporeTech.edu.sg">Talk to someone</a>
+        <button class="ds-theme" type="button" id="ds-theme-toggle" aria-pressed="false" title="Switch theme">Dark</button>
+        <div class="ds-account">
+          {% if boot.isAdmin %}
+          <button class="ds-mode" type="button" data-nav="records"{% if boot.page == 'records' %} aria-current="page"{% endif %}>Admin view</button>
+          <form action="{{ url_for('admin_logout') }}" method="post">
+            <input type="hidden" name="csrf_token" value="{{ boot.csrfToken }}">
+            <button class="ds-mode" type="submit">Sign out</button>
+          </form>
+          {% else %}
+          <span class="ds-mode" aria-current="page">Student view</span>
+          <a class="ds-mode" href="{{ url_for('admin_login') }}">Admin sign in</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="ds-demo">Private SIT check-in · AI-assisted suggestions · not a medical diagnosis · your ID is never sent to the AI</div>
+  <main id="ds-main"><noscript><p>This interactive check-in needs JavaScript. Enable it and reload this page.</p></noscript></main>
+  <footer class="ds-footer">
+    <div class="ds-foot-brand"><span class="ds-logo" aria-hidden="true">+</span>DoNotStress</div>
+    <p class="ds-foot-kicker">Support contacts</p>
+    <ul class="ds-foot-contacts">
+      <li>SIT Counselling 24-Hour Helpline · <a href="tel:65922030">6592 2030</a> · <a href="mailto:SITCounselling@SingaporeTech.edu.sg">SITCounselling@SingaporeTech.edu.sg</a></li>
+      <li>Samaritans of Singapore · <a href="tel:1767">1767</a> · CareText <a href="tel:91511767">9151 1767</a></li>
+      <li>National mindline · <a href="tel:1771">1771</a></li>
+    </ul>
+    <p class="ds-foot-crisis">For urgent emergencies outside school hours, contact the 24-hour helpline (6592 2030), Samaritans of Singapore (1767), or emergency services (995 / 999).</p>
+    <p class="ds-foot-note">Wellbeing guidance only. Not a medical diagnosis.</p>
+  </footer>
+</div>
+<script id="campus-config" type="application/json">{{ boot | tojson }}</script>
+<script src="{{ url_for('static', filename='campus.js') }}" defer></script>
+{% endblock %}
